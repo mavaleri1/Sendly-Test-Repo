@@ -6,3 +6,5 @@ repoFullName = Hazyshades/Sendly-Test-Repo
 owner        = Hazyshades
 
 Create a pull request
+
+# Case A. Issue Bounty Escrow
