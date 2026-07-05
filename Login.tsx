@@ -1,7 +1,8 @@
 
 
 
-Review to Earn → 15 USDC
+Review to Earn → 15 USDC Review to Earn → 15 USDC
+
 import React, { useState } } from 'react';
 
 export default function BadComponent() {
