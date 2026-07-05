@@ -1,4 +1,5 @@
-import React, { useState } } from 'react';
+fix
+  import React, { useState } } from 'react';
 
 export default function BadComponent() {
   const [user, setUser] = useState<User>(); 
