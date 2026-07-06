@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from "react";
 
 type User = {
   name: string;
@@ -6,49 +6,59 @@ type User = {
 };
 
 export default function Login() {
-  const [token, setToken] = useState('');
   const [user, setUser] = useState<User | null>(null);
+  const [name, setName] = useState("");
+  const [token, setToken] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const trimmedName = name.trim();
     const trimmedToken = token.trim();
 
-    if (!trimmedToken) {
-      setUser(null);
-      setError('Enter a login token before continuing.');
+    if (!trimmedName || !trimmedToken) {
+      setError("Name and token are required.");
       return;
     }
 
-    setUser({ name: 'User', token: trimmedToken });
+    setUser({ name: trimmedName, token: trimmedToken });
     setError(null);
   };
 
   if (user) {
     return (
-      <main>
-        <h1>Welcome, {user.name}</h1>
-        <p>Token accepted.</p>
+      <section>
+        <h1>Hello, {user.name}</h1>
+        <p>Login token received.</p>
         <button type="button" onClick={() => setUser(null)}>
           Log out
         </button>
-      </main>
+      </section>
     );
   }
 
   return (
-    <main>
-      <h1>Login</h1>
+    <form onSubmit={handleLogin}>
+      <label htmlFor="login-name">Name</label>
+      <input
+        id="login-name"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        autoComplete="username"
+      />
+
       <label htmlFor="login-token">Token</label>
       <input
         id="login-token"
         value={token}
         onChange={(event) => setToken(event.target.value)}
-        placeholder="Paste your token"
+        autoComplete="one-time-code"
       />
-      {error ? <p role="alert">{error}</p> : null}
-      <button type="button" onClick={handleLogin}>
-        Log in
-      </button>
-    </main>
+
+      {error && <p role="alert">{error}</p>}
+
+      <button type="submit">Log in</button>
+    </form>
   );
 }
